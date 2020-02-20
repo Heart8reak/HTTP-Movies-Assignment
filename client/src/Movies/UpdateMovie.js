@@ -23,18 +23,6 @@ const UpdateMovie = (props) => {
             .catch(err => console.log(err))
     }, [id])
 
-    // useEffect(() => {
-    //     console.log("testing props", props.items)
-    //     const editingItem = props.items.find(thing => {
-    //         if (`${thing.id}` === props.match.params.id) {
-
-    //         }
-    //         return thing
-    //     })
-    //     if (editingItem) {
-    //         setMovieInfo(editingItem)
-    //     }
-    // }, [props.items, props.match.params])
 
     const changeHandle = e => {
         e.persist()
@@ -66,10 +54,6 @@ const UpdateMovie = (props) => {
                 setMovieInfo(initialItem)
                 props.history.push('/')
             })
-
-
-        // const id = Number(props.match.params.id)
-        // props.updateItem(id, movieInfo)
     }
 
     return (

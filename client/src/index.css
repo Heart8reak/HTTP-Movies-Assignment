@@ -51,7 +51,7 @@ body {
 .save-wrapper {
   position: relative;
   width: 75%;
-  margin: 1rem auto;
+  margin: 0 auto;
 }
 .save-button {
   position: absolute;
@@ -68,10 +68,36 @@ body {
 
 .home-button {
   padding: 5px 10px;
-  background-color: lightskyblue;
+  background-color: lightseagreen;
 }
 
 .movie-warning {
   color: red;
   text-align: center;
+}
+
+button {
+  padding: 10px 10px;
+/* margin: 10px 5px; */
+font-size: 1.2rem;
+background-color: lightseagreen;
+width: 40%;
+margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
+}
+
+input {
+  padding: 5px 10px;
+  font-size: 1.2rem;
+  margin: 5px 0;
 }

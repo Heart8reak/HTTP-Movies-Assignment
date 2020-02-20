@@ -16,7 +16,7 @@ const AddMovie = props => {
     const handleChange = e => {
         let value = e.target.value;
         if (e.target.name === "metascore") {
-            value = parseInt(value, 10)
+            value = parseInt(value, 100)
         }
         setData({
             ...data,
