@@ -4,6 +4,7 @@ import SavedList from "./Movies/SavedList";
 import MovieList from "./Movies/MovieList";
 import Movie from "./Movies/Movie";
 import UpdateMovie from './Movies/UpdateMovie'
+import AddMovie from './Movies/AddMovie'
 
 
 const App = () => {
@@ -23,7 +24,24 @@ const App = () => {
           return <Movie {...props} addToSavedList={addToSavedList} />;
         }}
       />
-      <Route path="/update-movie/:id" component={UpdateMovie} />
+      <Route
+        path="/update-movie/:id"
+        render={props => {
+          return <UpdateMovie
+            {...props}
+            items={savedList}
+          />
+        }}
+      />
+      <Route
+        path="/add-movie/"
+        render={props => {
+          return <AddMovie
+            {...props}
+            items={savedList}
+          />
+        }}
+      />
     </>
   );
 };

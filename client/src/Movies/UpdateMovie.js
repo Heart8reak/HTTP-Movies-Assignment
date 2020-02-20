@@ -1,64 +1,116 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 
-const UpdateMovie = (props => {
-    const [movie, setMovie] = useState({ id: props.match.params.id })
+const initialItem = {
+    title: "",
+    director: "",
+    metascore: "",
+    stars: []
+}
 
-    const handleChange = e => {
-        setMovie({
-            ...movie,
-            [e.target.name]: e.target.value
+const UpdateMovie = (props) => {
+    const [movieInfo, setMovieInfo] = useState({ initialItem })
+    const { id } = useParams()
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:5000/api/movies/${id}`)
+            .then(res => {
+                setMovieInfo(res.data)
+            })
+            .catch(err => console.log(err))
+    }, [id])
+
+    // useEffect(() => {
+    //     console.log("testing props", props.items)
+    //     const editingItem = props.items.find(thing => {
+    //         if (`${thing.id}` === props.match.params.id) {
+
+    //         }
+    //         return thing
+    //     })
+    //     if (editingItem) {
+    //         setMovieInfo(editingItem)
+    //     }
+    // }, [props.items, props.match.params])
+
+    const changeHandle = e => {
+        e.persist()
+        let value = e.target.value;
+        if (e.target.name === "metascore") {
+            value = parseInt(value, 10)
+        }
+        console.log(movieInfo)
+        setMovieInfo({
+            ...movieInfo,
+            [e.target.name]: value
         })
-        console.log(movie)
+    }
+
+    const changeHandler = e => {
+        setMovieInfo({
+            ...movieInfo,
+            stars: [e.target.value]
+        })
     }
 
     const handleSubmit = e => {
         e.preventDefault()
-        const MovieUpdater = {
-            ...movie,
-            stars: movie.star.split(', '),
-        }
-
+        console.log(movieInfo)
         axios
-            .put(`http://localhost:5000/api/movies/${props.match.params.id}`, MovieUpdater)
+            .put(`http://localhost:5000/api/movies/${id}`, movieInfo)
             .then(res => {
-                console.log(res)
-                document.querySelector('form').reset()
+                console.log(movieInfo)
+                setMovieInfo(initialItem)
                 props.history.push('/')
             })
-            .catch(err => {
-                console.log(err)
-            })
+
+
+        // const id = Number(props.match.params.id)
+        // props.updateItem(id, movieInfo)
     }
 
     return (
         <div>
+            <h2>Edit Movie</h2>
             <form onSubmit={handleSubmit}>
                 <input
-                    placeholder="Movie Name"
+                    type="text"
                     name="title"
-                    onChange={handleChange}
+                    placholder="Title"
+                    onChange={changeHandle}
+                    value={movieInfo.title}
                 />
                 <input
-                    placeholder="Director"
+                    type="text"
                     name="director"
-                    onChange={handleChange}
+                    placholder="Title"
+                    onChange={changeHandle}
+                    value={movieInfo.director}
                 />
                 <input
-                    placeholder="Metascore"
-                    name="director"
-                    onChange={handleChange}
+                    type="text"
+                    name="metascore"
+                    placholder="Title"
+                    onChange={changeHandle}
+                    value={movieInfo.metascore}
                 />
                 <input
-                    placeholder="Stars"
+                    type="text"
                     name="stars"
-                    onChange={handleChange}
+                    placholder="Title"
+                    onChange={changeHandler}
+                    value={movieInfo.stars}
                 />
-                <button type="submit">Submit</button>
+                <br />
+                <button
+                >Save Changes</button>
             </form>
+
+
         </div>
     )
-})
-
+}
 export default UpdateMovie
